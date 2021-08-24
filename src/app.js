@@ -10,7 +10,7 @@
     function FoundItemsDirective() {
       var ddo = {
         templateUrl: 'foundItems.html',
-      };
+      }
       return ddo;
     }
 
@@ -18,29 +18,12 @@
     function NarrowItDownController(MenuSearchService) {
     var list = this;
     list.searchTerm = "";
-    list.message = "";
 
     list.narrowItDown = function() {
-      var promise = MenuSearchService.getMatchedMenuItems();
+      var promise = MenuSearchService.getMatchedMenuItems(list.searchTerm);
       promise.then(function (response) {
-        console.log(response.data);
-        if (list.searchTerm != ""){
-          var found = [];
-          for(let i = 0; i < response.data.menu_items.length; i++){
-              if(response.data.menu_items[i].description.toLowerCase().search(list.searchTerm.toLowerCase()) > 0) {
-                found.push(response.data.menu_items[i]);
-            }
-            }
-          list.items = found;
-
-        } else {
-          list.items = response.data.menu_items;
-        }
-        if(list.items.length != 0){
-          list.message = "";
-        } else {
-          list.message = "Nothing Found!!";
-        }
+        list.items = response;
+        list.message = response.message;
       })
         .catch(function (error) {
           console.log("Something went terribly wrong.");
@@ -55,12 +38,32 @@
     MenuSearchService.$inject = ['$http', 'ApiBasePath'];
     function MenuSearchService($http, ApiBasePath, searchTerm) {
       var service = this;
-      service.getMatchedMenuItems = function ()  {
-        var response = $http({
+      service.getMatchedMenuItems = function (searchTerm)  {
+        return $http({
           method: "GET",
           url: (ApiBasePath + "/menu_items.json")
+        }).then(function (result){
+
+          if (searchTerm != ""){
+            var found = [];
+            for(let i = 0; i < result.data.menu_items.length; i++){
+                if(result.data.menu_items[i].description.toLowerCase().search(searchTerm.toLowerCase()) > 0) {
+                  found.push(result.data.menu_items[i]);
+              }
+              }
+              if (found != "") {
+                found.message = "";
+              } else {
+                found.message = "Nothing!!";
+              }
+
+          } else {
+            found = result.data.menu_items;
+          }
+
+          return found;
+
         });
-        return response;
       };    
     }
 })();    
