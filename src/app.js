@@ -9,7 +9,6 @@
 
     function FoundItemsDirective() {
       var ddo = {
-        restrict: 'E',
         templateUrl: 'foundItems.html',
       };
       return ddo;
@@ -28,7 +27,7 @@
         if (list.searchTerm != ""){
           var found = [];
           for(let i = 0; i < response.data.menu_items.length; i++){
-              if(response.data.menu_items[i].description.search(list.searchTerm) > 0) {
+              if(response.data.menu_items[i].description.toLowerCase().search(list.searchTerm.toLowerCase()) > 0) {
                 found.push(response.data.menu_items[i]);
             }
             }
