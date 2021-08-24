@@ -1,4 +1,5 @@
 (function () {
+  'use strict';
 
     angular.module('NarrowItDownApp',[])
     .controller('NarrowItDownController', NarrowItDownController)
@@ -8,9 +9,9 @@
 
     function FoundItemsDirective() {
       var ddo = {
-        templateUrl: 'foundItems.html'
+        restrict: 'E',
+        templateUrl: 'foundItems.html',
       };
-
       return ddo;
     }
 
@@ -18,6 +19,7 @@
     function NarrowItDownController(MenuSearchService) {
     var list = this;
     list.searchTerm = "";
+    list.message = "";
 
     list.narrowItDown = function() {
       var promise = MenuSearchService.getMatchedMenuItems();
@@ -31,6 +33,9 @@
             }
             }
           list.items = found;
+          if(list.items.length == 0){
+            list.message = "Nothing Found!!";
+          }
         } else {
           list.items = response.data.menu_items;
         }
