@@ -35,6 +35,8 @@
           list.items = found;
           if(list.items.length == 0){
             list.message = "Nothing Found!!";
+          } else {
+            list.message = "";
           }
         } else {
           list.items = response.data.menu_items;
