@@ -61,7 +61,9 @@
               if (found != "") {
                 found.message = "";
               } else {
-                found.message = "Nothing!!";
+                var messages = ["Zilch!","Nothing!","Zip!","Try again!","Nada!", "Sorry, we don't have that!","You got nothing!","Not on the menu!"];
+                var message = messages[Math.floor(Math.random() * messages.length)];
+                found.message = message;
               }
 
           } else {
