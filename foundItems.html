@@ -1,3 +1,5 @@
-<li>
+<ul style="list-style-type: none;">
+<li ng-repeat="item in list.items">
     <button ng-click="list.removeItem($index);">Remove Item</button> {{ item.name }} 
 </li>
+</ul>

@@ -19,11 +19,9 @@
       <button class="btn btn-primary" ng-click="list.narrowItDown();">Narrow It Down For Me!</button>
     </div>
   <br><br><br><br>{{list.message}}<br><br>
+
     <!-- found-items should be implemented as a component -->
-    
-    <ul style="list-style-type: none;">
-    <found-items ng-repeat="item in list.items"></found-items>
-    </ul>
+    <found-items items = "list.items" ></found-items>
 
    </div>
    
