@@ -58,16 +58,18 @@
                   found.push(result.data.menu_items[i]);
               }
               }
+              
               if (found != "") {
                 found.message = "";
               } else {
-                var messages = ["Zilch!","Nothing!","Zip!","Try again!","Nada!", "Sorry, we don't have that!","You got nothing!","Not on the menu!"];
+                var messages = ["Nothing Found"];
                 var message = messages[Math.floor(Math.random() * messages.length)];
                 found.message = message;
               }
 
           } else {
-            found = result.data.menu_items;
+            found = [];
+            found.message = "Nothing Found";
           }
 
           return found;

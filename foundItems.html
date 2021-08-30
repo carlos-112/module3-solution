@@ -1,5 +1,6 @@
-<ul style="list-style-type: none;">
-<li ng-repeat="item in list.items">
-    <button ng-click="list.onRemove({index: $index});">Remove Item</button> {{ item.name }} 
-</li>
-</ul>
+<table>
+    <tr valign="top" ng-repeat="item in list.items">
+    <td width="150px" height="75px" ><button ng-click="list.onRemove({index: $index});">Don't want this one!</button></td>
+    <td width="500px"><b>({{ item.short_name }}) {{ item.name }}</b><br>{{ item.description }}</td>
+</tr>
+</table>
