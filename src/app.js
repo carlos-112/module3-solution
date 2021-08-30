@@ -12,6 +12,7 @@
         templateUrl: 'foundItems.html',
         scope: {
           items: '<',
+          onEmpty: '<',
           onRemove: '&',
         },
         controller: NarrowItDownController,
@@ -30,7 +31,11 @@
       var promise = MenuSearchService.getMatchedMenuItems(list.searchTerm);
       promise.then(function (response) {
         list.items = response;
-        list.message = response.message;
+        if (list.items.length > 0){
+          list.message = false;
+        } else {
+          list.message = true;
+        };
       })
         .catch(function (error) {
           console.log("Something went terribly wrong.");
@@ -38,6 +43,9 @@
 
       list.removeItem = function (itemIndex) {
         list.items.splice(itemIndex, 1);
+        if (list.items.length == 0){
+          list.message = true;
+        };
       }
   }
 }
@@ -50,31 +58,15 @@
           method: "GET",
           url: (ApiBasePath + "/menu_items.json")
         }).then(function (result){
-
-          if (searchTerm != ""){
-            var found = [];
-            for(let i = 0; i < result.data.menu_items.length; i++){
-                if(result.data.menu_items[i].description.toLowerCase().search(searchTerm.toLowerCase()) > 0) {
-                  found.push(result.data.menu_items[i]);
+        var found = [];
+          for(let i = 0; i < result.data.menu_items.length; i++){
+              if(result.data.menu_items[i].description.toLowerCase().search(searchTerm.toLowerCase()) > 0) {
+                found.push(result.data.menu_items[i]);
               }
-              }
-              
-              if (found != "") {
-                found.message = "";
-              } else {
-                var messages = ["Nothing Found"];
-                var message = messages[Math.floor(Math.random() * messages.length)];
-                found.message = message;
-              }
-
-          } else {
-            found = [];
-            found.message = "Nothing Found";
-          }
-
-          return found;
-
+            }
+            return found;
         });
       };    
     }
+    
 })();    
