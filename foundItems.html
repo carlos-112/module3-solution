@@ -1,4 +1,4 @@
-<div ng-show="list.onEmpty">Nothing Found</div>
+<div ng-show="list.onEmpty"><b>Nothing Found</b></div><br><br>
 <table>
     <tr valign="top" ng-repeat="item in list.items">
     <td width="150px" height="75px" ><button ng-click="list.onRemove({index: $index});">Don't want this one!</button></td>
